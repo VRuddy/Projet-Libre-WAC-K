@@ -6,6 +6,10 @@ on:
       - main
 
 jobs:
+  env:
+    PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+    GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+
   sync:
     runs-on: ubuntu-latest
 
