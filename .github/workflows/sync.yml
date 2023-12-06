@@ -17,5 +17,5 @@ jobs:
         run: |
           git config --global user.email "ruddy.villain@epitech.eu"
           git config --global user.name "Vruddy"
-          git remote add private https://github.com/EpitechWebAcademiePromo2024/W-PRO-250-LYN-3-2-projetlibre-victor.imbo.git
+          git remote add private git@github.com:EpitechWebAcademiePromo2024/W-PRO-250-LYN-3-2-projetlibre-victor.imbo.git
           git push private HEAD:main  # Remplacez par le nom de votre branche principale
