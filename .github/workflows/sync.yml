@@ -3,7 +3,7 @@ name: Sync Repositories
 on:
   push:
     branches:
-      - main # Remplacez par le nom de votre branche principale
+      - main
 
 jobs:
   sync:
@@ -13,9 +13,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Add SSH key
+        run: |
+          echo "$PRIVATE_KEY" > private-key.pem
+          chmod 600 private-key.pem
+          eval "$(ssh-agent -s)"
+          ssh-add private-key.pem
+
       - name: Push changes to private repository
         run: |
-          git config --global user.email "ruddy.villain@epitech.eu"
-          git config --global user.name "Vruddy"
           git remote add private git@github.com:EpitechWebAcademiePromo2024/W-PRO-250-LYN-3-2-projetlibre-victor.imbo.git
-          git push private HEAD:main  # Remplacez par le nom de votre branche principale
+          git push private HEAD:main
+    env:
+      PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
