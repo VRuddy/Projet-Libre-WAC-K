@@ -1,0 +1,21 @@
+name: Sync Repositories
+
+on:
+  push:
+    branches:
+      - main # Remplacez par le nom de votre branche principale
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Push changes to private repository
+        run: |
+          git config --global user.email "ruddy.villain@epitech.eu"
+          git config --global user.name "Vruddy"
+          git remote add private https://github.com/EpitechWebAcademiePromo2024/W-PRO-250-LYN-3-2-projetlibre-victor.imbo.git
+          git push private HEAD:main  # Remplacez par le nom de votre branche principale
