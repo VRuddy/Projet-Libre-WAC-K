@@ -6,10 +6,6 @@ on:
       - main
 
 jobs:
-  env:
-    PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-    GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-
   sync:
     runs-on: ubuntu-latest
 
@@ -29,4 +25,5 @@ jobs:
           git remote add private git@github.com:EpitechWebAcademiePromo2024/W-PRO-250-LYN-3-2-projetlibre-victor.imbo.git
           git push private HEAD:main
     env:
+      GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
       PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
