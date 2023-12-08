@@ -9,21 +9,23 @@ jobs:
   sync:
     runs-on: ubuntu-latest
 
+    env:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Add SSH key
+      - name: Set up SSH
         run: |
-          echo "$PRIVATE_KEY" > private-key.pem
-          chmod 600 private-key.pem
-          eval "$(ssh-agent -s)"
-          ssh-add private-key.pem
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.email "ruddy.villain@epitech.eu"
+          git config --global user.name "Vruddy"
 
       - name: Push changes to private repository
         run: |
           git remote add private git@github.com:EpitechWebAcademiePromo2024/W-PRO-250-LYN-3-2-projetlibre-victor.imbo.git
           git push private HEAD:main
-    env:
-      GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-      PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
